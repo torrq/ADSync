@@ -310,13 +310,14 @@ def _run_ffmpeg_with_progress(
     """Run ffmpeg emitting machine-readable progress on stdout and parse it."""
     binary = _find_binary("ffmpeg")
     cmd = [
-        binary, "-hide_banner", "-y", "-nostats", "-loglevel", "error",
+        binary, "-nostdin", "-hide_banner", "-y", "-nostats", "-loglevel", "error",
         "-progress", "pipe:1", *args,
     ]
     log.debug("ffmpeg %s", " ".join(args))
 
     proc = subprocess.Popen(
         cmd,
+        stdin=subprocess.DEVNULL,
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
         text=True,

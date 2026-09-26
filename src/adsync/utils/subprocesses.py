@@ -84,10 +84,11 @@ def run_ffmpeg(args: list[str], *, check: bool = True, threads: int | None = Non
     Raises :class:`FFmpegError` with a parsed message on failure.
     """
     binary = _find_binary("ffmpeg")
-    cmd = [binary, "-hide_banner", "-y", *_threaded_args(args, threads)]
+    cmd = [binary, "-nostdin", "-hide_banner", "-y", *_threaded_args(args, threads)]
     log.debug("ffmpeg %s", " ".join(args))
     result = subprocess.run(
         cmd,
+        stdin=subprocess.DEVNULL,
         capture_output=True,
         text=True,
         encoding="utf-8",
@@ -154,6 +155,7 @@ def run_ffprobe(args: list[str]) -> subprocess.CompletedProcess[str]:
     log.debug("ffprobe %s", " ".join(args))
     return subprocess.run(
         cmd,
+        stdin=subprocess.DEVNULL,
         capture_output=True,
         text=True,
         encoding="utf-8",

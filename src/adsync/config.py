@@ -52,7 +52,7 @@ class SyncConfig(BaseModel):
     warp_lambda_curve: float = Field(5.0, ge=0.0, description="DP penalty weight for curvature (second derivative)")
     warp_lambda_speech: float = Field(0.3, ge=0.0, description="DP bonus weight for speech-rich windows")
     warp_anchor_fraction: float = Field(0.6, ge=0.1, le=1.0, description="Fraction of decoded points used as PCHIP anchors")
-    warp_discontinuity_threshold: float = Field(2.0, ge=0.5, description="Offset jump (seconds) to declare a timing discontinuity")
+    warp_discontinuity_threshold: float = Field(0.8, ge=0.2, le=5.0, description="Offset jump (seconds) to declare a timing discontinuity")
     warp_search_radius: float | None = Field(
         None,
         description="Per-window video-position search radius in seconds, centred on the "
